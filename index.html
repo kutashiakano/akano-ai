@@ -6,15 +6,14 @@
     <title>Chat Bot AI</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
-        body {
+     body {
     font-family: Arial, sans-serif;
     background-color: #F5F6F1;
     display: flex;
-    justify-content: unset;
-    align-items: unset;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     margin: 0;
-    padding: 0;
 }
 
 #chat-container {
@@ -28,263 +27,265 @@
     overflow: hidden;
 }
 
-        #header {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #E0E0E0;
-            background-color: #606BAD;
-            cursor: pointer;
-        }
+#header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #E0E0E0;
+    background-color: #606BAD;
+    cursor: pointer;
+    flex-shrink: 0;
+}
 
-        #header img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
+#header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
 
-        #header .header-info {
-            flex: 1;
-        }
+#header .header-info {
+    flex: 1;
+}
 
-        #header .header-info h2 {
-            margin: 0;
-            font-size: 16px;
-            color: #F5F6F1;
-        }
+#header .header-info h2 {
+    margin: 0;
+    font-size: 16px;
+    color: #F5F6F1;
+}
 
-        #header .header-info p {
-            margin: 0;
-            font-size: 12px;
-            color: #E0E0E0;
-        }
+#header .header-info p {
+    margin: 0;
+    font-size: 12px;
+    color: #E0E0E0;
+}
 
-        #chatbox {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            background-color: #F5F6F1;
-        }
+#chatbox {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F6F1;
+}
 
-        .message-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: 10px;
-        }
+.message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
 
-        .message {
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 70%;
-            word-wrap: break-word;
-            display: flex;
-            position: relative;
-        }
+.message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    display: flex;
+    position: relative;
+}
 
-        .message.user {
-            align-self: flex-end;
-            background-color: #6372DF;
-            color: #F5F6F1;
-        }
+.message.user {
+    align-self: flex-end;
+    background-color: #6372DF;
+    color: #F5F6F1;
+}
 
-        .message.ai {
-            align-self: flex-start;
-            background-color: #E0E0E0;
-            color: #333;
-        }
+.message.ai {
+    align-self: flex-start;
+    background-color: #E0E0E0;
+    color: #333;
+}
 
-        .message-info {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            white-space: nowrap;
-        }
+.message-info {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    white-space: nowrap;
+}
 
-        #input-container {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-top: 1px solid #E0E0E0;
-            background-color: #fff;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
+#input-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #E0E0E0;
+    background-color: #fff;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    flex-shrink: 0;
+}
 
-        #aiSelectionButton {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background-color: #606BAD;
-            color: white;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-        }
+#aiSelectionButton {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: #606BAD;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
 
-        #aiSelectionButton:hover {
-            background-color: #3949ab;
-        }
+#aiSelectionButton:hover {
+    background-color: #3949ab;
+}
 
-        #userInput {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #E0E0E0;
-            border-radius: 20px;
-            background-color: #fff;
-            color: #333;
-            margin-right: 10px;
-        }
+#userInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #E0E0E0;
+    border-radius: 20px;
+    background-color: #fff;
+    color: #333;
+    margin-right: 10px;
+}
 
-        #sendButton {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background-color: #606BAD;
-            color: white;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-        }
+#sendButton {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: #606BAD;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
 
-        #sendButton:disabled {
-            background-color: #BDBDBD;
-        }
+#sendButton:disabled {
+    background-color: #BDBDBD;
+}
 
-        #sendButton:hover {
-            background-color: #3949ab;
-        }
+#sendButton:hover {
+    background-color: #3949ab;
+}
 
-        #typing-indicator {
-            display: none;
-            padding: 10px;
-            margin: 5px 0;
-            align-self: flex-start;
-            font-size: 12px;
-            color: #888;
-        }
+#typing-indicator {
+    display: none;
+    padding: 10px;
+    margin: 5px 0;
+    align-self: flex-start;
+    font-size: 12px;
+    color: #888;
+}
 
-        .dot {
-            width: 8px;
-            height: 8px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
-            animation: blink 1.4s infinite both;
-        }
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    animation: blink 1.4s infinite both;
+}
 
-        .dot:nth-child(1) { animation-delay: 0.2s; }
-        .dot:nth-child(2) { animation-delay: 0.4s; }
-        .dot:nth-child(3) { animation-delay: 0.6s; }
+.dot:nth-child(1) { animation-delay: 0.2s; }
+.dot:nth-child(2) { animation-delay: 0.4s; }
+.dot:nth-child(3) { animation-delay: 0.6s; }
 
-        @keyframes blink {
-            0%, 80%, 100% { opacity: 0; }
-            40% { opacity: 1; }
-        }
+@keyframes blink {
+    0%, 80%, 100% { opacity: 0; }
+    40% { opacity: 1; }
+}
 
-        /* Modal styles */
-        #profileModal, #aiSelectionModal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-        }
+/* Modal styles */
+#profileModal, #aiSelectionModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
 
-        #modalContent, #aiModalContent {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 400px;
-            text-align: center;
-        }
+#modalContent, #aiModalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
 
-        #modalContent img, #aiModalContent img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
+#modalContent img, #aiModalContent img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
 
-        #modalContent h2, #aiModalContent h2 {
-            margin: 10px 0;
-        }
+#modalContent h2, #aiModalContent h2 {
+    margin: 10px 0;
+}
 
-        #closeModal, .close-modal {
-            background-color: #606BAD;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-        }
+#closeModal, .close-modal {
+    background-color: #606BAD;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
 
-        #closeModal:hover, .close-modal:hover {
-            background-color: #3949ab;
-        }
+#closeModal:hover, .close-modal:hover {
+    background-color: #3949ab;
+}
 
-        .ai-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            margin: 10px 0;
-            background-color: #E0E0E0;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+.ai-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: #E0E0E0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        .ai-card:hover {
-            background-color: #BDBDBD;
-        }
+.ai-card:hover {
+    background-color: #BDBDBD;
+}
 
-        .ai-card img {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 10px;
-        }
+.ai-card img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+}
 
-        .ai-card h3 {
-            margin: 10px 0;
-            font-size: 18px;
-        }
+.ai-card h3 {
+    margin: 10px 0;
+    font-size: 18px;
+}
 
-        .ai-card p {
-            margin: 0;
-            font-size: 14px;
-            color: #666;
-            text-align: center;
-        }
+.ai-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+}
     </style>
 </head>
 <body>
